@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.140'
+    id 'net.neoforged.moddev' version '2.0.141'
     id 'idea'
 }
 
@@ -22,20 +22,15 @@ repositories {
 }
 
 base {
-    archivesName = mod_id
+    archivesName = "tantn_${mod_id}"
 }
 
-// Mojang ships Java 21 to end users in 1.21.1, so mods should target Java 21.
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+// NeoForge 26.1.x ships Java 25 to end users, so mods should target Java 25.
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 neoForge {
     // Specify the version of NeoForge to use.
     version = project.neo_version
-
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
-    }
 
     // This line is optional. Access Transformers are automatically detected
     // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
@@ -183,4 +178,41 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
+}
+
+// Copy the built JAR to the project root directory after build
+tasks.register('copyJarToRoot', Copy) {
+    description = 'Copies the built mod JAR to the project root directory'
+    from(layout.buildDirectory.dir('libs')) {
+        include('tantn_*.jar')
+        exclude('*-sources.jar')
+        exclude('*-dev.jar')
+    }
+    into(layout.projectDirectory)
+}
+
+// Auto-increment the patch version in gradle.properties after each build
+tasks.register('incrementVersion') {
+    description = 'Auto-increments the patch version in gradle.properties after build'
+    def propsFile = layout.projectDirectory.file('gradle.properties')
+    doLast {
+        def f = propsFile.asFile
+        def content = f.text
+        def newContent = content.replaceFirst(/(?m)^(mod_version=\d+\.\d+\.)(\d+)/) { full, prefix, patch ->
+            "${prefix}${(patch as int) + 1}"
+        }
+        if (newContent != content) {
+            f.text = newContent
+            println "Version incremented in gradle.properties"
+        }
+    }
+}
+
+tasks.named('build').configure {
+    finalizedBy 'copyJarToRoot'
+}
+
+tasks.named('copyJarToRoot').configure {
+    mustRunAfter 'jar'
+    finalizedBy 'incrementVersion'
 }

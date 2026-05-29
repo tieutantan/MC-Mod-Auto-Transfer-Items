@@ -3,7 +3,7 @@ package com.example.examplemod;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
@@ -19,7 +19,7 @@ import java.util.Set;
 public record AutoTransferPacket() implements CustomPacketPayload {
     
     public static final Type<AutoTransferPacket> TYPE = 
-        new Type<>(ResourceLocation.fromNamespaceAndPath(AutoTransferItems.MOD_ID, "transfer"));
+        new Type<>(Identifier.fromNamespaceAndPath(AutoTransferItems.MOD_ID, "transfer"));
     
     public static final StreamCodec<FriendlyByteBuf, AutoTransferPacket> STREAM_CODEC = 
         StreamCodec.unit(new AutoTransferPacket());
@@ -54,8 +54,8 @@ public record AutoTransferPacket() implements CustomPacketPayload {
             // Config (cache values)
             int startInv = Config.TRANSFER_HOTBAR.get() ? 0 : 9;
             List<? extends String> whitelistConfig = Config.WHITELIST_ITEMS.get();
-            Set<ResourceLocation> whitelist = whitelistConfig.isEmpty() ? null : 
-                whitelistConfig.stream().map(ResourceLocation::parse).collect(java.util.stream.Collectors.toSet());
+            Set<Identifier> whitelist = whitelistConfig.isEmpty() ? null : 
+                whitelistConfig.stream().map(Identifier::parse).collect(java.util.stream.Collectors.toSet());
 
             // Transfer loop
             for (int invIndex = startInv; invIndex < 36; invIndex++) {
@@ -99,6 +99,6 @@ public record AutoTransferPacket() implements CustomPacketPayload {
     }
 
     public static void sendToServer() {
-        net.neoforged.neoforge.network.PacketDistributor.sendToServer(new AutoTransferPacket());
+        net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(new AutoTransferPacket());
     }
 }

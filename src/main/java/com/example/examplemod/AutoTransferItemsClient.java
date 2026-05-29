@@ -22,8 +22,8 @@ public class AutoTransferItemsClient {
             return;
         }
 
-        int x = containerScreen.getGuiLeft() + containerScreen.getXSize() - 20;
-        int y = containerScreen.getGuiTop() + 5;
+        int x = containerScreen.getLeftPos() + containerScreen.getImageWidth() - 20;
+        int y = containerScreen.getTopPos() + 5;
 
         event.addListener(Button.builder(Component.literal("▶"), b -> AutoTransferPacket.sendToServer())
             .pos(x, y)

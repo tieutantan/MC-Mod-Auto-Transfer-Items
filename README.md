@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.1-brightgreen)
+![Minecraft Version](https://img.shields.io/badge/Minecraft-26.1.2-brightgreen)
 ![Mod Loader](https://img.shields.io/badge/Mod%20Loader-NeoForge-orange)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
@@ -16,7 +16,7 @@
 
 ## 📖 Description
 
-**Auto Transfer Items** is a quality-of-life mod for Minecraft 1.21.1 (NeoForge) that simplifies inventory management. With a single click, transfer all items from your inventory into any container—chest, barrel, furnace, hopper, and more!
+**Auto Transfer Items** is a quality-of-life mod for Minecraft 26.1.2 (NeoForge) that simplifies inventory management. With a single click, transfer all items from your inventory into any container—chest, barrel, furnace, hopper, and more!
 
 Perfect for players who want to:
 - Quickly unload inventory after mining trips
@@ -42,8 +42,8 @@ Perfect for players who want to:
 ## 📦 Installation
 
 ### Requirements
-- **Minecraft**: 1.21.1
-- **Mod Loader**: NeoForge 21.1+ ([Download NeoForge](https://neoforged.net/))
+- **Minecraft**: 26.1.2
+- **Mod Loader**: NeoForge 26.1.2+ ([Download NeoForge](https://neoforged.net/))
 
 ### Steps
 1. Download the latest `.jar` file from [Releases](../../releases)
@@ -113,8 +113,8 @@ maxContainerSlots = 5
 # Build the mod
 `./gradlew build`
 
-# JAR output location
-`build/libs/autotransferitems-1.0.0.jar`
+# JAR output location (in project root)
+`tantn_autotransferitems-1.0.0.jar`
 
 # Test in development environment
 `./gradlew runClient`

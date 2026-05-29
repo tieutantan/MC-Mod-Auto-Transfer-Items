@@ -2,7 +2,7 @@ package com.example.examplemod;
 
 import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class Config {
@@ -15,7 +15,7 @@ public class Config {
     public static final ModConfigSpec.ConfigValue<List<? extends String>> WHITELIST_ITEMS = BUILDER
             .comment("Whitelist items (empty = all). Format: 'minecraft:iron_ingot'")
             .defineListAllowEmpty("whitelistItems", List.of(), obj -> 
-                obj instanceof String s && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(s)));
+                obj instanceof String s && BuiltInRegistries.ITEM.containsKey(Identifier.parse(s)));
 
     public static final ModConfigSpec.IntValue MAX_TRANSFER_SLOTS = BUILDER
             .comment("Max container slots to transfer")
